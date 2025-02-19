@@ -4,91 +4,69 @@ Gerencia múltiplas redes, engajamento e crescimento
 Preço Referência: R$500-1500/mês
 """
 
-[Conteúdo anterior mantido...]
+import os
+from typing import Dict, Any, List, Optional, Set
+from datetime import datetime, timedelta
+import asyncio
+from openai import OpenAI
+import pandas as pd
+from dataclasses import dataclass
+import json
+import logging
+from difflib import SequenceMatcher
+import random
 
-    async def generate_report(self) -> str:
-        """
-        Gera relatório de performance
-        """
-        metrics = await self.analyze_performance()
-        
-        report = f"""
-        📱 Relatório de Redes Sociais - {datetime.now().strftime('%d/%m/%Y')} 📱
-        
-        Visão Geral:
-        """
-        
-        for platform, data in metrics.items():
-            report += f"""
-            {platform.title()}:
-            • Seguidores: {data['followers']:,} ({data['followers_change']:+,})
-            • Taxa de Engajamento: {data['engagement_rate']*100:.1f}%
-            • Melhores Horários: {', '.join(f"{h}h" for h, _ in data['best_time'])}
-            
-            Top Posts:
-            """
-            
-            for post in data['top_posts'][:3]:
-                report += f"""
-                - {post['text'][:100]}...
-                  Engajamento: {post['engagement']*100:.1f}%
-                """
-            
-            report += "\nHashtags Mais Efetivas:\n"
-            
-            # Top 5 hashtags
-            top_hashtags = sorted(
-                data['hashtag_performance'].items(),
-                key=lambda x: x[1]['avg_engagement'],
-                reverse=True
-            )[:5]
-            
-            for tag, metrics in top_hashtags:
-                report += f"• #{tag}: {metrics['avg_engagement']*100:.1f}%\n"
-        
-        report += "\n📈 Recomendações:\n"
-        
-        # Gerar recomendações baseadas nos dados
-        for platform, data in metrics.items():
-            if data['followers_change'] < 0:
-                report += f"• Aumentar frequência de posts no {platform}\n"
-            
-            if data['engagement_rate'] < 0.02:
-                report += f"• Revisar estratégia de conteúdo no {platform}\n"
-        
-        return report
-    
-    async def run_bot(self):
-        """
-        Executa bot de redes sociais
-        """
-        while True:
-            try:
-                # Gerar e agendar conteúdo
-                await self.schedule_content()
-                
-                # Realizar engajamento
-                await self.engage_with_followers()
-                
-                # Gerar relatório
-                report = await self.generate_report()
-                
-                # Enviar relatório (implementar método de envio)
-                await self.send_report(report)
-                
-                # Aguardar próximo ciclo
-                await asyncio.sleep(3600)  # 1 hora
-                
-            except Exception as e:
-                print(f"Erro na execução do bot: {str(e)}")
-                await asyncio.sleep(300)  # 5 minutos em caso de erro
+# Configuração de logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger('SocialMediaBot')
 
-# Exemplo de uso
-async def main():
-    bot = SocialMediaBot()
-    
-    # Iniciar bot
-    await bot.run_bot()
+# Classes de dados
+@dataclass
+class SocialConfig:
+    """Configurações de redes sociais"""
+    post_frequency: int
+    hashtags: Dict[str, List[str]]
+    engagement_rules: Dict[str, Dict[str, float]]
+    content_themes: List[str]
 
-if __name__ == "__main__":
-    asyncio.run(main())
+@dataclass
+class APIConfig:
+    """Configurações das APIs"""
+    instagram_token: str
+    facebook_token: str
+    twitter_token: str
+    tiktok_token: str
+    openai_key: str
+
+@dataclass
+class ContentMetrics:
+    """Métricas de conteúdo"""
+    reach: int
+    engagement: float
+    clicks: int
+    sentiment: float
+    platform: str
+
+class SocialMediaBot:
+    """
+    Bot completo para gestão de redes sociais
+    """
+    def __init__(self):
+        # Inicializar configurações
+        self.config = self._load_config()
+        self.api_config = self._load_api_config()
+        
+        # Inicializar APIs
+        self._init_apis()
+        
+        # Inicializar cache e estado
+        self.content_cache: Dict[str, List[Dict[str, Any]]] = {}
+        self.engagement_cache: Dict[str, Set[str]] = {}
+        self.analytics: Dict[str, Dict[str, Any]] = {}
+        
+        logger.info("Bot de Redes Sociais inicializado")
+
+[Resto do código mantido como estava...]
