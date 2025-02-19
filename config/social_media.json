@@ -1,0 +1,79 @@
+{
+    "frequency": {
+        "instagram": 5,
+        "facebook": 3,
+        "twitter": 7,
+        "tiktok": 4
+    },
+    "hashtags": {
+        "common": [
+            "tecnologia",
+            "inovacao",
+            "desenvolvimento",
+            "programacao",
+            "tech"
+        ],
+        "instagram": [
+            "instadaily",
+            "instatech",
+            "techlife",
+            "coding"
+        ],
+        "facebook": [
+            "technology",
+            "innovation",
+            "developer",
+            "programming"
+        ],
+        "twitter": [
+            "tech",
+            "coding",
+            "developer",
+            "100DaysOfCode"
+        ],
+        "tiktok": [
+            "techtok",
+            "codinglife",
+            "learncoding",
+            "programming"
+        ]
+    },
+    "engagement": {
+        "instagram": {
+            "like_probability": 0.8,
+            "comment_probability": 0.3,
+            "min_score": 3.0
+        },
+        "facebook": {
+            "like_probability": 0.7,
+            "comment_probability": 0.2,
+            "min_score": 2.5
+        },
+        "twitter": {
+            "like_probability": 0.9,
+            "comment_probability": 0.4,
+            "min_score": 2.0
+        },
+        "tiktok": {
+            "like_probability": 0.8,
+            "comment_probability": 0.3,
+            "min_score": 3.5
+        }
+    },
+    "themes": [
+        "Dicas de Programação",
+        "Novidades Tecnológicas",
+        "Carreira em Tech",
+        "Projetos Pessoais",
+        "Ferramentas de Desenvolvimento",
+        "Produtividade",
+        "Aprendizado Contínuo",
+        "Comunidade Tech"
+    ],
+    "prompts": {
+        "system": "Você é um assistente especializado em criar conteúdo para redes sociais no nicho de tecnologia e desenvolvimento.",
+        "error": "Desculpe, tive um problema ao processar sua mensagem. Por favor, tente novamente em alguns instantes.",
+        "human_handoff": "Estou transferindo você para um de nossos especialistas humanos. Em breve alguém entrará em contato.",
+        "fora_horario": "Nosso horário de atendimento é de {inicio}h às {fim}h. Por favor, retorne durante nosso horário comercial."
+    }
+}
