@@ -9,8 +9,11 @@ Este repositório contém um guia prático para utilização das ferramentas MCP
 3. [Gestão de Conhecimento](#gestão-de-conhecimento)
 4. [Utilitários](#utilitários)
 5. [Workflows Comuns](#workflows-comuns)
+6. [Limitações e Soluções](#limitações-e-soluções)
 
 ## 🗂 Gerenciamento de Arquivos
+
+**Nota**: Para informações sobre limitações e alternativas para deleção de arquivos, consulte [docs/limitacoes.md](docs/limitacoes.md)
 
 ### Comandos Essenciais
 - `create_directory`: Criar diretórios
