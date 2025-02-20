@@ -1,0 +1,54 @@
+{
+    "id": "template_base_001",
+    "name": "Template Base de Proposta",
+    "description": "Template padrão para propostas comerciais",
+    "introduction_template": "Prezado(a) {{ client.name }},\n\nÉ com satisfação que apresentamos nossa proposta comercial para {{ project.name }}. Nossa solução foi desenvolvida especialmente para atender às necessidades apresentadas durante nossas conversas e análises preliminares.",
+    "scope_template": "# Escopo do Projeto\n\n## Objetivos\n{{ project.objectives }}\n\n## Entregas\n{% for delivery in project.deliverables %}\n- {{ delivery }}\n{% endfor %}\n\n## Cronograma\nPrazo estimado: {{ project.timeline }} dias úteis",
+    "default_services": [
+        {
+            "description": "Análise e Planejamento",
+            "quantity": 1,
+            "unit_price": 2000.00,
+            "notes": "Inclui levantamento de requisitos e documentação inicial"
+        },
+        {
+            "description": "Desenvolvimento",
+            "quantity": 1,
+            "unit_price": 5000.00,
+            "notes": "Implementação conforme especificações aprovadas"
+        },
+        {
+            "description": "Testes e Homologação",
+            "quantity": 1,
+            "unit_price": 1500.00,
+            "notes": "Testes unitários, integração e homologação com cliente"
+        },
+        {
+            "description": "Implantação",
+            "quantity": 1,
+            "unit_price": 1500.00,
+            "notes": "Deploy em produção e acompanhamento inicial"
+        }
+    ],
+    "default_payment_terms": [
+        {
+            "description": "Entrada",
+            "percentage": 30,
+            "due_days": 0
+        },
+        {
+            "description": "Desenvolvimento",
+            "percentage": 40,
+            "due_days": 30
+        },
+        {
+            "description": "Entrega",
+            "percentage": 30,
+            "due_days": 60
+        }
+    ],
+    "terms_conditions_template": "## Termos e Condições\n\n1. **Prazo de Validade**\n   - Esta proposta é válida por {{ proposal.validity_days }} dias.\n\n2. **Formato de Trabalho**\n   - Reuniões semanais de acompanhamento\n   - Entregas incrementais conforme cronograma\n   - Ambiente de homologação para testes\n\n3. **Garantia**\n   - 90 dias após a entrega para correção de bugs\n   - Suporte técnico durante o desenvolvimento\n\n4. **Confidencialidade**\n   - Todas as informações trocadas durante o projeto são confidenciais\n   - NDA disponível se necessário\n\n5. **Propriedade Intelectual**\n   - Todo o código e documentação serão de propriedade do cliente após pagamento integral\n\n6. **Manutenção e Suporte**\n   - Pacotes de manutenção disponíveis após o período de garantia\n   - Suporte técnico em horário comercial\n\n7. **Condições de Pagamento**\n   - Pagamentos conforme cronograma estabelecido\n   - Notas fiscais emitidas a cada parcela\n   - Atrasos superiores a 10 dias podem interromper o desenvolvimento",
+    "created_at": "2025-02-20T00:00:00",
+    "updated_at": "2025-02-20T00:00:00",
+    "tags": ["base", "desenvolvimento", "software"]
+}
