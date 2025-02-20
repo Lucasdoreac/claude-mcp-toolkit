@@ -126,175 +126,261 @@ def configure_variables(type_id: str) -> Dict[str, Any]:
 
     for var_name, schema in template_vars.items():
         console.print(f"\n[bold]{var_name}[/bold]")
+        if schema["type"] == "string":
+            config[var_name] = configure_string_var(var_name, schema)
+        elif schema["type"] == "number":
+            config[var_name] = configure_number_var(var_name, schema)
+        elif schema["type"] == "date":
+            config[var_name] = configure_date_var(var_name, schema)
+        elif schema["type"] == "array":
+            config[var_name] = configure_array_var(var_name, schema)
+        elif schema["type"] == "object":
+            config[var_name] = configure_object_var(var_name, schema)
+
+    return config
+
+def configure_string_var(name: str, schema: Dict) -> Dict[str, Any]:
+    """Configure string variable."""
+    config = {"type": "string"}
+
+    # Validation
+    if questionary.confirm(
+        "Add validation?",
+        default=False
+    ).ask():
+        config["min_length"] = questionary.text(
+            "Minimum length (optional):",
+            validate=lambda text: text.isdigit() or text == ""
+        ).ask()
+
+        config["max_length"] = questionary.text(
+            "Maximum length (optional):",
+            validate=lambda text: text.isdigit() or text == ""
+        ).ask()
+
+        config["pattern"] = questionary.text(
+            "Regex pattern (optional):"
+        ).ask()
+
+    # Default value
+    if questionary.confirm(
+        "Add default value?",
+        default=False
+    ).ask():
+        config["default"] = questionary.text(
+            "Default value:"
+        ).ask()
+
+    return config
+
+def configure_number_var(name: str, schema: Dict) -> Dict[str, Any]:
+    """Configure number variable."""
+    config = {"type": "number"}
+
+    # Validation
+    if questionary.confirm(
+        "Add validation?",
+        default=False
+    ).ask():
+        config["min"] = questionary.text(
+            "Minimum value (optional):",
+            validate=lambda text: text.replace(".", "").isdigit() or text == ""
+        ).ask()
+
+        config["max"] = questionary.text(
+            "Maximum value (optional):",
+            validate=lambda text: text.replace(".", "").isdigit() or text == ""
+        ).ask()
+
+        config["integer"] = questionary.confirm(
+            "Integer only?",
+            default=False
+        ).ask()
+
+    # Default value
+    if questionary.confirm(
+        "Add default value?",
+        default=False
+    ).ask():
+        config["default"] = questionary.text(
+            "Default value:",
+            validate=lambda text: text.replace(".", "").isdigit()
+        ).ask()
+
+    return config
+
+def configure_date_var(name: str, schema: Dict) -> Dict[str, Any]:
+    """Configure date variable."""
+    config = {"type": "date"}
+
+    # Format
+    config["format"] = questionary.select(
+        "Date format:",
+        choices=[
+            "YYYY-MM-DD",
+            "DD/MM/YYYY",
+            "MM/DD/YYYY",
+            "Custom"
+        ]
+    ).ask()
+
+    if config["format"] == "Custom":
+        config["format"] = questionary.text(
+            "Custom format:"
+        ).ask()
+
+    # Validation
+    if questionary.confirm(
+        "Add validation?",
+        default=False
+    ).ask():
+        config["min_date"] = questionary.text(
+            "Minimum date (optional, YYYY-MM-DD):"
+        ).ask()
+
+        config["max_date"] = questionary.text(
+            "Maximum date (optional, YYYY-MM-DD):"
+        ).ask()
+
+    return config
+
+def configure_array_var(name: str, schema: Dict) -> Dict[str, Any]:
+    """Configure array variable."""
+    config = {"type": "array"}
+
+    # Item type
+    config["item_type"] = questionary.select(
+        "Array item type:",
+        choices=["string", "number", "object"]
+    ).ask()
+
+    # Validation
+    if questionary.confirm(
+        "Add validation?",
+        default=False
+    ).ask():
+        config["min_items"] = questionary.text(
+            "Minimum items (optional):",
+            validate=lambda text: text.isdigit() or text == ""
+        ).ask()
+
+        config["max_items"] = questionary.text(
+            "Maximum items (optional):",
+            validate=lambda text: text.isdigit() or text == ""
+        ).ask()
+
+        config["unique"] = questionary.confirm(
+            "Require unique items?",
+            default=False
+        ).ask()
+
+    return config
+
+def configure_object_var(name: str, schema: Dict) -> Dict[str, Any]:
+    """Configure object variable."""
+    config = {"type": "object"}
+
+    # Properties
+    if questionary.confirm(
+        "Define object properties?",
+        default=True
+    ).ask():
+        config["properties"] = {}
         
-        # Variable type
-        var_type = schema["type"]
-        console.print(f"Type: {var_type}")
-
-        # Default value
-        if questionary.confirm(
-            f"Set default value for {var_name}?",
-            default=False
-        ).ask():
-            if var_type == "string":
-                default = questionary.text(
-                    "Default value:"
-                ).ask()
-            elif var_type == "number":
-                default = questionary.text(
-                    "Default value:",
-                    validate=lambda text: text.replace(".", "").isdigit()
-                ).ask()
-            elif var_type == "date":
-                default = questionary.text(
-                    "Default value (YYYY-MM-DD):",
-                    validate=lambda text: len(text.split("-")) == 3
-                ).ask()
-            elif var_type == "array":
-                default = []
-            elif var_type == "object":
-                default = {}
+        while True:
+            prop_name = questionary.text(
+                "Property name (empty to finish):"
+            ).ask()
             
-            config[var_name] = {
-                "type": var_type,
-                "required": schema["required"],
-                "default": default
+            if not prop_name:
+                break
+            
+            prop_type = questionary.select(
+                f"Type for {prop_name}:",
+                choices=["string", "number", "date", "boolean"]
+            ).ask()
+            
+            required = questionary.confirm(
+                f"Is {prop_name} required?",
+                default=False
+            ).ask()
+            
+            config["properties"][prop_name] = {
+                "type": prop_type,
+                "required": required
             }
-        else:
-            config[var_name] = {
-                "type": var_type,
-                "required": schema["required"]
-            }
-
-        # Validation
-        if questionary.confirm(
-            f"Add validation for {var_name}?",
-            default=False
-        ).ask():
-            validation = {}
-            
-            if var_type == "string":
-                if questionary.confirm("Add minimum length?").ask():
-                    validation["min_length"] = int(questionary.text(
-                        "Minimum length:",
-                        validate=lambda text: text.isdigit()
-                    ).ask())
-                
-                if questionary.confirm("Add maximum length?").ask():
-                    validation["max_length"] = int(questionary.text(
-                        "Maximum length:",
-                        validate=lambda text: text.isdigit()
-                    ).ask())
-                
-                if questionary.confirm("Add pattern match?").ask():
-                    validation["pattern"] = questionary.text(
-                        "Regex pattern:"
-                    ).ask()
-            
-            elif var_type == "number":
-                if questionary.confirm("Add minimum value?").ask():
-                    validation["min_value"] = float(questionary.text(
-                        "Minimum value:",
-                        validate=lambda text: text.replace(".", "").isdigit()
-                    ).ask())
-                
-                if questionary.confirm("Add maximum value?").ask():
-                    validation["max_value"] = float(questionary.text(
-                        "Maximum value:",
-                        validate=lambda text: text.replace(".", "").isdigit()
-                    ).ask())
-            
-            if validation:
-                config[var_name]["validation"] = validation
 
     return config
 
 def get_example_content(type_id: str) -> str:
     """Get example template content."""
     if type_id == "email":
-        return """
-<!DOCTYPE html>
+        return """<!DOCTYPE html>
 <html>
-<head>
-    <style>
-        body { font-family: Arial, sans-serif; }
-        .header { background: #f5f5f5; padding: 20px; }
-        .content { padding: 20px; }
-    </style>
-</head>
 <body>
-    <div class="header">
-        <h1>{{ subject }}</h1>
-    </div>
-    <div class="content">
-        <p>Dear {{ recipient_name }},</p>
-        
-        {{ content }}
-        
-        <p>Best regards,<br>{{ sender_name }}</p>
-    </div>
+    <p>Dear {{ recipient_name }},</p>
+    
+    <p>{{ content }}</p>
+    
+    <p>Best regards,<br>
+    {{ sender_name }}</p>
 </body>
-</html>
-"""
-    elif type_id == "proposal":
-        return """
-# {{ title }}
+</html>"""
 
+    elif type_id == "proposal":
+        return """# {{ title }}
+
+## Client Information
 **Client:** {{ client_name }}
-**Value:** ${{ deal_value }}
+**Date:** {{ date }}
 **Valid Until:** {{ valid_until }}
 
 ## Items
-
 {% for item in items %}
 - {{ item.name }}: ${{ item.value }}
 {% endfor %}
 
+**Total:** ${{ deal_value }}
+
 ## Payment Terms
+{{ payment_terms }}"""
 
-{{ payment_terms }}
-"""
-    elif type_id == "document":
-        return """
-# {{ title }}
+    else:
+        return """# {{ title }}
 
-Author: {{ author }}
+**Author:** {{ author }}
+**Date:** {{ date }}
 
 {{ content }}
 
 {% if metadata %}
----
+## Metadata
 {% for key, value in metadata.items() %}
-{{ key }}: {{ value }}
+- {{ key }}: {{ value }}
 {% endfor %}
-{% endif %}
-"""
-    else:
-        return ""
+{% endif %}"""
 
-def save_template(info: Dict[str, Any], variables: Dict[str, Any], path: str):
+def save_template(template_info: Dict[str, Any], config: Dict[str, Any], path: str):
     """Save template configuration."""
-    config = {
-        "type": info["type"],
-        "name": info["name"],
-        "description": info["description"],
-        "content": info["content"],
-        "variables": variables
-    }
-
-    # Create directory if needed
+    # Create template directory if needed
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
-    # Save config
+    # Combine info and config
+    template_data = {
+        "info": template_info,
+        "variables": config
+    }
+
+    # Save template
     with open(path, "w") as f:
-        yaml.dump(config, f, default_flow_style=False)
+        yaml.dump(template_data, f, default_flow_style=False)
 
     console.print(f"\n[green]Template saved to {path}[/green]")
 
     # Show preview
     console.print("\n[bold]Template Preview:[/bold]")
     console.print(Syntax(
-        yaml.dump(config, default_flow_style=False),
+        yaml.dump(template_data, default_flow_style=False),
         "yaml",
         theme="monokai"
     ))
@@ -302,28 +388,18 @@ def save_template(info: Dict[str, Any], variables: Dict[str, Any], path: str):
 @click.command()
 @click.option(
     "--output",
-    default="templates/new.yaml",
+    default="templates/template.yaml",
     help="Output file path"
 )
-def create_template(output: str):
-    """Create a new template interactively."""
-    # Show template types
+def setup_template(output: str):
+    """Run template setup wizard."""
     show_template_info()
 
-    # Select type
     type_id = select_template_type()
+    template_info = collect_template_info(type_id)
+    variable_config = configure_variables(type_id)
 
-    # Collect information
-    info = collect_template_info(type_id)
-    info["type"] = type_id
-
-    # Configure variables
-    variables = configure_variables(type_id)
-
-    # Save template
-    save_template(info, variables, output)
-
-    console.print("\n[bold green]Template created successfully![/bold green]")
+    save_template(template_info, variable_config, output)
 
 if __name__ == "__main__":
-    create_template()
+    setup_template()
