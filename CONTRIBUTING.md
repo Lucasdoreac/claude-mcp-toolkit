@@ -1,68 +1,115 @@
-# Contribuindo para o Claude MCP Toolkit
+# Contributing Guide
 
-Obrigado por seu interesse em contribuir com o Claude MCP Toolkit! 
+## Development Setup
 
-## Como Contribuir
+1. Fork and clone the repository:
+```bash
+git clone https://github.com/your-username/claude-mcp-toolkit.git
+cd claude-mcp-toolkit
+```
 
-1. **Fork & Clone**
-   - Faça um fork do repositório
-   - Clone localmente: `git clone https://github.com/SEU-USERNAME/claude-mcp-toolkit.git`
+2. Set up development environment:
+- Follow instructions in `docs/setup.md`
+- Install development dependencies
 
-2. **Branches**
-   - Crie uma branch para sua feature: `git checkout -b feature/sua-feature`
-   - Para bugs: `git checkout -b fix/bug-description`
+3. Create a new branch:
+```bash
+git checkout -b feature/your-feature
+```
 
-3. **Commits**
-   - Use mensagens claras e descritivas
-   - Formato: `tipo(escopo): descrição`
-   - Exemplos:
-     - `feat(bot): adiciona suporte ao WhatsApp`
-     - `fix(docs): corrige links quebrados`
+## Development Flow
 
-4. **Código**
-   - Siga o estilo de código do projeto
-   - Adicione testes quando possível
-   - Atualize a documentação
+1. Make your changes following our:
+- Code style guide
+- Architecture guidelines (`docs/architecture.md`)
+- Test requirements
 
-5. **Pull Request**
-   - Atualize sua branch com a main
-   - Envie o PR com descrição clara
-   - Responda aos comentários/reviews
+2. Test your changes:
+```bash
+# Backend tests
+pytest
 
-## Diretrizes
+# Frontend tests
+cd src/frontend
+npm test
+```
 
-1. **Qualidade**
-   - Mantenha o código limpo e documentado
-   - Siga as boas práticas de Python
-   - Teste antes de enviar
+3. Update documentation:
+- Update relevant docs in `/docs`
+- Add comments to code
+- Update README if needed
 
-2. **Documentação**
-   - Atualize README quando necessário
-   - Documente novas funcionalidades
-   - Mantenha guias atualizados
+4. Commit changes:
+```bash
+git add .
+git commit -m "feat: description of your changes"
+```
 
-3. **Commits**
-   - Um commit por mudança lógica
-   - Mensagens claras e descritivas
-   - Rebase antes do PR
+5. Push and create PR:
+```bash
+git push origin feature/your-feature
+```
 
-## Processo de Review
+## Code Style
 
-1. Verificação automática (CI/CD)
-2. Review por mantenedores
-3. Feedback e iterações
-4. Merge quando aprovado
+1. Python (Backend):
+- Follow PEP 8
+- Use type hints
+- Add docstrings
+- Maximum line length: 88 characters
 
-## Onde Ajudar
+2. TypeScript (Frontend):
+- Follow Prettier config
+- Use TypeScript types
+- Follow React best practices
+- Use ESLint rules
 
-- Correção de bugs
-- Novas funcionalidades
-- Melhorias na documentação
-- Otimizações de código
-- Novos exemplos e templates
+## Testing
 
-## Dúvidas?
+1. Backend Tests:
+- Unit tests required
+- Integration tests for API
+- Minimum 80% coverage
 
-- Abra uma issue
-- Use as discussions
-- Entre no Discord
+2. Frontend Tests:
+- Component tests
+- Hook tests
+- Integration tests
+- E2E tests for critical flows
+
+## Documentation
+
+1. Code Documentation:
+- Clear function/class documentation
+- Inline comments for complex logic
+- Type documentation
+- Example usage
+
+2. API Documentation:
+- OpenAPI/Swagger docs
+- Example requests/responses
+- Error documentation
+
+3. Architecture Documentation:
+- Update `docs/architecture.md`
+- Document new components
+- Update diagrams if needed
+
+## Pull Request Process
+
+1. PR Requirements:
+- Passes all tests
+- Follows code style
+- Has documentation
+- Reviews addressed
+
+2. Review Process:
+- Code review required
+- Documentation review
+- Tests verified
+- Performance checked
+
+3. Merge Process:
+- Squash and merge
+- Clear commit message
+- Delete branch after merge
