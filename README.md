@@ -6,16 +6,22 @@
 
 ## Overview
 
-The Claude MCP Toolkit is a comprehensive CRM and business automation platform that helps manage deals, clients, and proposals efficiently.
+O Claude MCP Toolkit é uma plataforma abrangente de CRM e automação de negócios que ajuda a gerenciar negócios, clientes e propostas de forma eficiente.
 
 ### Features
 
-- ✅ CRM Base
-- ✅ Proposal Generator
-- ✅ Email Integration
-- ⏳ Web Dashboard
-  - ✅ Frontend Base
-  - ⏳ Backend API
+- ✅ [CRM Base](docs/features/crm.md)
+- ✅ [Gerador de Propostas](docs/features/proposals.md)
+- ✅ [Integração de Email](docs/features/email.md)
+- ⏳ Dashboard Web
+  - ✅ [Frontend Base](docs/features/frontend.md)
+  - ✅ [Backend API](docs/features/api.md)
+  - ✅ [Autenticação (JWT)](docs/features/auth.md)
+  - ✅ [Banco de Dados](docs/features/database.md)
+  - ✅ [Cache (Redis)](docs/features/cache.md)
+  - ✅ [Sistema de Notificações](docs/features/notifications.md)
+
+Veja a lista completa de features em [docs/features](docs/features/README.md).
 
 ### Tech Stack
 
@@ -31,41 +37,40 @@ Frontend:
 - Tailwind CSS
 - React Query
 
-## Getting Started
+## Primeiros Passos
 
-1. Setup:
-- Follow [Setup Guide](docs/setup.md)
+1. Configuração:
+- Siga o [Guia de Configuração](docs/setup.md)
 
-2. Documentation:
-- [Architecture](docs/architecture.md)
-- [Contributing](CONTRIBUTING.md)
+2. Documentação:
+- [Arquitetura](docs/architecture.md)
+- [Features](docs/features/README.md)
+- [Contribuição](CONTRIBUTING.md)
 
-## Project Status
+## Status do Projeto
 
-### Completed
+### Completo
 - CRM Base
-- Proposal Generator
-- Email Integration
+- Gerador de Propostas
+- Integração de Email
 - Frontend Base
-- API Base Structure
-- Authentication (JWT)
-- Database Integration
-- Redis Cache
+- Estrutura Base da API
+- Autenticação (JWT)
+- Integração com Banco de Dados
+- Cache Redis
+- Integração Frontend-Backend
+- Sistema de Notificações
 
-### In Progress
-- Frontend-Backend Integration
-- Notification System
+### Planejado
+- Sistema de Templates
+- Integrações Externas
+- Ferramentas CLI
+- Sistema de Plugins
 
-### Planned
-- Templates System
-- External Integrations
-- CLI Tools
-- Plugin System
+## Contribuindo
 
-## Contributing
+Contribuições são bem-vindas! Veja nosso [Guia de Contribuição](CONTRIBUTING.md) para detalhes.
 
-We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+## Licença
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
