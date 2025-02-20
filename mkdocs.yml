@@ -1,0 +1,97 @@
+site_name: Claude MCP Toolkit
+site_description: Toolkit completo para desenvolvimento e automação com Claude
+repo_url: https://github.com/Lucasdoreac/claude-mcp-toolkit
+repo_name: Lucasdoreac/claude-mcp-toolkit
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          rendering:
+            show_source: true
+  - git-revision-date-localized:
+      type: datetime
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+nav:
+  - Home: index.md
+  - Guias:
+      - Introdução: guia-detalhado/01-introducao.md
+      - Setup: guia-detalhado/02-setup.md
+      - GitHub: guia-detalhado/03-github.md
+      - Arquivos: guia-detalhado/04-arquivos.md
+      - APIs: guia-detalhado/05-apis.md
+      - Análise: guia-detalhado/06-analise.md
+      - Workflows: guia-detalhado/07-workflows.md
+  - Exemplos:
+      - Marketing Digital: exemplos/marketing_digital.md
+      - Analytics Dashboard: exemplos/analytics_dashboard.md
+      - Gestão Financeira: exemplos/gestao_financeira.md
+      - Atendimento Bot: exemplos/atendimento_bot.md
+  - API Reference:
+      - Social Media: reference/social_media.md
+      - Analytics: reference/analytics.md
+      - Finance: reference/finance.md
+      - Bot: reference/bot.md
+  - Contribuição: contributing.md
+  - Código de Conduta: code_of_conduct.md
