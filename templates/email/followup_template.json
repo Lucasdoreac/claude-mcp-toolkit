@@ -1,0 +1,10 @@
+{
+    "id": "followup_email_001",
+    "name": "Template de Email para Follow-up",
+    "type": "followup",
+    "subject_template": "Follow-up: {{ proposal.title }}",
+    "body_template": "<!DOCTYPE html>\n<html>\n<body>\n<p>Prezado(a) {{ client.name }},</p>\n\n<p>Gostaria de fazer um follow-up sobre a proposta comercial que enviamos para <strong>{{ proposal.title }}</strong> no dia {{ proposal.created_at.strftime('%d/%m/%Y') }}.</p>\n\n<p>Você teve a oportunidade de analisar o material? Estou à disposição para esclarecer qualquer dúvida e, se preferir, podemos agendar uma reunião para discutir os detalhes pessoalmente.</p>\n\n<p>Lembrando que a proposta tem validade até {{ (proposal.created_at + timedelta(days=proposal.validity_days)).strftime('%d/%m/%Y') }}.</p>\n\n<p>Principais pontos da proposta:</p>\n<ul>\n    <li>Investimento total: R$ {{ '%.2f'|format(proposal.total_value) }}</li>\n    <li>Prazo de execução: {{ project.timeline }} dias</li>\n    <li>Início previsto: Imediato após aprovação</li>\n</ul>\n\n<p>Aguardo seu retorno para darmos continuidade ao projeto.</p>\n\n<p>Atenciosamente,<br>{{ sender.name }}</p>\n</body>\n</html>",
+    "created_at": "2025-02-20T00:00:00",
+    "updated_at": "2025-02-20T00:00:00",
+    "tags": ["followup", "proposal"]
+}
