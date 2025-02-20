@@ -1,0 +1,10 @@
+{
+    "id": "proposal_email_001",
+    "name": "Template de Email para Proposta",
+    "type": "proposal",
+    "subject_template": "Proposta Comercial - {{ proposal.title }}",
+    "body_template": "<!DOCTYPE html>\n<html>\n<body>\n<p>Prezado(a) {{ client.name }},</p>\n\n<p>É com satisfação que encaminhamos nossa proposta comercial para <strong>{{ proposal.title }}</strong>.</p>\n\n<p>Conforme conversamos, desenvolvemos uma solução personalizada para atender às necessidades do seu projeto. A proposta anexa detalha:</p>\n\n<ul>\n    <li>Escopo completo do projeto</li>\n    <li>Metodologia de trabalho</li>\n    <li>Cronograma de entregas</li>\n    <li>Investimento e condições de pagamento</li>\n</ul>\n\n<p>Valor total do investimento: <strong>R$ {{ '%.2f'|format(proposal.total_value) }}</strong></p>\n\n<p>Esta proposta é válida por {{ proposal.validity_days }} dias.</p>\n\n<p>Estou à disposição para esclarecer qualquer dúvida e agendar uma reunião para discutirmos os detalhes.</p>\n\n<p>Aguardo seu retorno.</p>\n\n<p>Atenciosamente,<br>{{ sender.name }}</p>\n</body>\n</html>",
+    "created_at": "2025-02-20T00:00:00",
+    "updated_at": "2025-02-20T00:00:00",
+    "tags": ["proposal", "commercial"]
+}
